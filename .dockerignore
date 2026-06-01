@@ -1,5 +1,16 @@
-*
-!target/*-runner
-!target/*-runner.jar
-!target/lib/*
-!target/quarkus-app/*
+# Build artifacts and IDE files
+target/
+!target/quarkus-app/
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+.factorypath
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
