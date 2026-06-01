@@ -1,4 +1,4 @@
-package com.zamhealth.resources;
+package org.youthintech.resources;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.Consumes;

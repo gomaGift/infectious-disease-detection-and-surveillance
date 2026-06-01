@@ -1,4 +1,4 @@
-package com.zamhealth;
+package org.youthintech;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 

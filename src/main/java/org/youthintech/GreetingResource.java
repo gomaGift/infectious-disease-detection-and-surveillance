@@ -1,4 +1,4 @@
-package com.zamhealth;
+package org.youthintech;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
