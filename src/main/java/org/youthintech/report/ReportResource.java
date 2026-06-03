@@ -1,4 +1,4 @@
-package org.youthintech.health.report;
+package org.youthintech.report;
 
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

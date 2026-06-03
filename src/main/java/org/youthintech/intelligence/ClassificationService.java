@@ -1,4 +1,4 @@
-package org.youthintech.health.intelligence;
+package org.youthintech.intelligence;
 
 import io.vertx.mutiny.pgclient.PgPool;
 import jakarta.annotation.PostConstruct;

@@ -1,4 +1,4 @@
-package org.youthintech.health.alert;
+package org.youthintech.alert;
 
 public enum AlertLevel {
     MONITOR,

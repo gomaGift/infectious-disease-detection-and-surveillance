@@ -1,4 +1,4 @@
-package org.youthintech.health.intelligence;
+package org.youthintech.intelligence;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;

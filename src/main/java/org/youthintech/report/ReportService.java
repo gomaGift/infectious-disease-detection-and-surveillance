@@ -1,4 +1,4 @@
-package org.youthintech.health.report;
+package org.youthintech.report;
 
 
 import io.smallrye.mutiny.Uni;
@@ -7,7 +7,7 @@ import io.vertx.mutiny.sqlclient.Tuple;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
-import org.youthintech.health.intelligence.ClassificationService;
+import org.youthintech.intelligence.ClassificationService;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;

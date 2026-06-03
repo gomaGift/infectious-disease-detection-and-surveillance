@@ -1,10 +1,10 @@
-package org.youthintech.health.ussd;
+package org.youthintech.ussd;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import io.smallrye.mutiny.Uni;
-import org.youthintech.health.report.ReportRequest;
-import org.youthintech.health.report.ReportService;
+import org.youthintech.report.ReportRequest;
+import org.youthintech.report.ReportService;
 
 
 /**

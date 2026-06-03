@@ -1,4 +1,4 @@
-package org.youthintech.health.alert;
+package org.youthintech.alert;
 
 import io.vertx.mutiny.pgclient.PgPool;
 import io.vertx.mutiny.sqlclient.Tuple;

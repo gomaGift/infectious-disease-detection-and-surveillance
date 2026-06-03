@@ -1,11 +1,9 @@
-package org.youthintech.health.ussd;
+package org.youthintech.ussd;
 
 import io.quarkus.logging.Log;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.jboss.logging.Logger;
 import io.smallrye.mutiny.Uni;
 
 @Path("/api/v1/ussd")

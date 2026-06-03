@@ -1,4 +1,4 @@
-package org.youthintech.health.intelligence;
+package org.youthintech.intelligence;
 
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;

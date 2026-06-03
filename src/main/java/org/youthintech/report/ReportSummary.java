@@ -1,4 +1,4 @@
-package org.youthintech.health.report;
+package org.youthintech.report;
 
 public class ReportSummary {
     public String ref;
