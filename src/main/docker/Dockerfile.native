@@ -33,7 +33,7 @@ RUN ./mvnw package -Pnative -DskipTests \
     -Dquarkus.native.native-image-xmx=7g
 
 # Stage 2 — minimal runtime image
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.9
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.5
 
 WORKDIR /app
 
