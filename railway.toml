@@ -3,7 +3,7 @@ builder = "DOCKERFILE"
 dockerfilePath = "src/main/docker/Dockerfile.native"
 
 [deploy]
-startCommand = "./zamhealth -Dquarkus.http.host=0.0.0.0 -Dquarkus.http.port=$PORT"
+startCommand = "/bin/sh -c './zamhealth -Dquarkus.http.host=0.0.0.0 -Dquarkus.http.port=$PORT'"
 healthcheckPath = "/q/health"
 healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"
