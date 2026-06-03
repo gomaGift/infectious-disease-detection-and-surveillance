@@ -25,6 +25,6 @@ public class SymptomsReportingResource {
     }
 
     private String processSession(String sessionId, String text) {
-        return String.format("sessionId: %s, reported symptoms: %s", sessionId, text);
+        return String.format("CON sessionId: %s, reported symptoms: %s", sessionId, text);
     }
 }
