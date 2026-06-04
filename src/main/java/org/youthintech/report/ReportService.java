@@ -29,7 +29,7 @@ public class ReportService {
      * stored with its disease label from the start.
      */
     public Uni<String> save(ReportRequest req) {
-        String ref           = generateRef();
+        String ref  = generateRef();
         String classification = classifier.classify(req.symptom, req.severity, req.duration);
 
         String sql = """
