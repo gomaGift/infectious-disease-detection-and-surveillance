@@ -1,4 +1,4 @@
-package org.youthintech.intelligence;
+package org.youthintech.services;
 
 import io.vertx.mutiny.pgclient.PgPool;
 import jakarta.annotation.PostConstruct;

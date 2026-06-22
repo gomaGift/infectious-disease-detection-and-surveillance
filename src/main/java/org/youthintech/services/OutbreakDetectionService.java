@@ -1,4 +1,4 @@
-package org.youthintech.intelligence;
+package org.youthintech.services;
 
 import io.vertx.mutiny.pgclient.PgPool;
 import io.vertx.mutiny.sqlclient.Tuple;
@@ -7,8 +7,7 @@ import jakarta.inject.Inject;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
-import org.youthintech.alert.AlertLevel;
-import org.youthintech.alert.AlertService;
+import org.youthintech.enums.AlertLevel;
 
 
 import java.util.*;

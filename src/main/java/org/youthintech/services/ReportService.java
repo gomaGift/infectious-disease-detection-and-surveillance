@@ -1,4 +1,4 @@
-package org.youthintech.report;
+package org.youthintech.services;
 
 
 import io.smallrye.mutiny.Uni;
@@ -7,7 +7,8 @@ import io.vertx.mutiny.sqlclient.Tuple;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
-import org.youthintech.intelligence.ClassificationService;
+import org.youthintech.dtos.ReportRequest;
+import org.youthintech.dtos.ReportSummary;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;

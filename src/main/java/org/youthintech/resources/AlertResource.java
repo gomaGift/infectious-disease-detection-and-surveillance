@@ -1,4 +1,4 @@
-package org.youthintech.alert;
+package org.youthintech.resources;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.Response;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.youthintech.services.AlertService;
 
 @Path("/api/v1/alerts")
 @Produces(MediaType.APPLICATION_JSON)

@@ -1,37 +1,25 @@
-package org.youthintech.ussd;
+package org.youthintech.services;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
-import org.youthintech.report.ReportRequest;
-import org.youthintech.report.ReportService;
+import jakarta.enterprise.context.ApplicationScoped;
+import org.youthintech.models.CommunityReport;
+import org.youthintech.repositories.CommunityReportRepository;
 
-
-/**
- * Stateless USSD session handler.
- *
- * Africa's Talking accumulates all user inputs in the `text` parameter,
- * separated by *. We split on * to determine which step we are on
- * and what the user entered at each step.
- *
- * Example text values as session progresses:
- *   ""        → user just dialled, show welcome
- *   "1"       → selected option 1 from welcome (Report symptoms)
- *   "1*2"     → selected Diarrhoea as symptom
- *   "1*2*3"   → selected 4-7 days duration
- *   "1*2*3*2" → selected Moderate severity
- *   ...etc
- */
 @ApplicationScoped
-public class UssdSessionHandler {
+public class UssdService {
 
-    @Inject
-    ReportService reportService;
+    private final CommunityReportRepository communityReportRepository;
+    private final ClassificationService classificationService;
+
+    public UssdService(CommunityReportRepository communityReportRepository, ClassificationService classificationService) {
+        this.communityReportRepository = communityReportRepository;
+        this.classificationService = classificationService;
+    }
+
 
     public Uni<String> handle(String sessionId, String phoneNumber, String text) {
-        String[] steps = text == null || text.isBlank()
-                ? new String[0]
-                : text.split("\\*", -1);
+        String[] steps = text == null || text.isBlank() ? new String[0] : text.split("\\*", -1);
 
         return switch (steps.length) {
             case 0 -> Uni.createFrom().item(welcomeScreen());
@@ -171,7 +159,7 @@ public class UssdSessionHandler {
     // ── Step 5: Age group selected ───────────────────────────
 
     private Uni<String> handleAgeGroup(String w, String symptom, String duration,
-                                        String severity, String age) {
+                                       String severity, String age) {
         if (!age.matches("[1-4]")) {
             return Uni.createFrom().item("""
                     CON Invalid option.
@@ -196,7 +184,7 @@ public class UssdSessionHandler {
     // ── Step 6: District selected ────────────────────────────
 
     private Uni<String> handleDistrict(String w, String symptom, String duration,
-                                        String severity, String age, String district) {
+                                       String severity, String age, String district) {
         if (!district.matches("[1-6]")) {
             return Uni.createFrom().item("""
                     CON Invalid option.
@@ -233,6 +221,7 @@ public class UssdSessionHandler {
     // ── Step 7: Confirm ──────────────────────────────────────
 
     private Uni<String> handleConfirm(String phoneNumber, String[] steps) {
+
         String confirm = steps[6];
 
         if ("2".equals(confirm)) {
@@ -242,19 +231,27 @@ public class UssdSessionHandler {
             return Uni.createFrom().item("END Invalid option. Please dial again.");
         }
 
-        // Build report from accumulated steps
-        ReportRequest req = new ReportRequest();
-        req.channel   = "ussd";
-        req.phoneHash = hashPhone(phoneNumber);
-        req.symptom   = resolveSymptom(steps[1]);
-        req.duration  = resolveDuration(steps[2]);
-        req.severity  = resolveSeverity(steps[3]);
-        req.ageGroup  = resolveAge(steps[4]);
-        req.district  = resolveDistrict(steps[5]);
+        CommunityReport communityReport = new CommunityReport();
 
-        return reportService.save(req)
-                .map(ref -> "END Report submitted.\n\nReference: " + ref +
-                            "\n\nThank you. Stay safe.");
+        communityReport.setChannel("ussd");
+        communityReport.setPhoneHash(hashPhone(phoneNumber));
+        communityReport.setSymptom(resolveSymptom(steps[1]));
+        communityReport.setDuration(resolveDuration(steps[2]));
+        communityReport.setSeverity(resolveSeverity(steps[3]));
+        communityReport.setAgeGroup(resolveAge(steps[4]));
+        communityReport.setDistrict(resolveDistrict(steps[5]));
+
+        String classification = classificationService.classify(communityReport.getSymptom(), communityReport.getSeverity(), communityReport.getDuration());
+        communityReport.setClassifiedAs(classification);
+
+        return communityReportRepository.persistAndFlush(communityReport)
+                .map(savedReport -> {
+                    Log.infof("Saved report ref=%s channel=%s district=%s classified_as=%s", savedReport.getId(), communityReport.getChannel(), communityReport.getDistrict(), classification);
+
+                    return "END Report submitted.\n\nReference: ".concat(communityReport.getId().toString())
+                            .concat("\n\nThank you. Stay safe.");
+                }).onFailure().invoke(e ->
+                        Log.errorf("Failed to save report ref=%s: %s", communityReport.getId(), e.getMessage()));
     }
 
     // ── Label resolvers ──────────────────────────────────────

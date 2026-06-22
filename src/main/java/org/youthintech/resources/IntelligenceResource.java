@@ -1,4 +1,4 @@
-package org.youthintech.intelligence;
+package org.youthintech.resources;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -7,13 +7,15 @@ import jakarta.ws.rs.core.Response;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.youthintech.services.OutbreakDetectionService;
 
 @Path("/api/v1/intelligence")
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Intelligence", description = "Trend analysis and outbreak detection")
 public class IntelligenceResource {
 
-    @Inject OutbreakDetectionService detectionService;
+    @Inject
+    OutbreakDetectionService detectionService;
 
     /**
      * Manually trigger a full analysis run.

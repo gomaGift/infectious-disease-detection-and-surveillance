@@ -1,4 +1,4 @@
-package org.youthintech.report;
+package org.youthintech.dtos;
 
 
 import jakarta.validation.constraints.NotBlank;

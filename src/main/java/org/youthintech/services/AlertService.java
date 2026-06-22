@@ -1,4 +1,4 @@
-package org.youthintech.alert;
+package org.youthintech.services;
 
 import io.vertx.mutiny.pgclient.PgPool;
 import io.vertx.mutiny.sqlclient.Tuple;
@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
+import org.youthintech.enums.AlertLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class AlertService {
      * If none exists, insert a new one.
      */
     public Uni<Void> raiseOrUpdate(String disease, String district,
-                                    AlertLevel level, double rValue, int caseCount) {
+                                   AlertLevel level, double rValue, int caseCount) {
 
         // Check for existing active alert
         String findSql = """

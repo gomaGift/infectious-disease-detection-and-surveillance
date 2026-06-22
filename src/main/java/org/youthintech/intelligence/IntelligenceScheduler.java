@@ -4,6 +4,7 @@ import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
+import org.youthintech.services.OutbreakDetectionService;
 
 @ApplicationScoped
 public class IntelligenceScheduler {

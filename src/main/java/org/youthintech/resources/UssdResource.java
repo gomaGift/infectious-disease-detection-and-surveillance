@@ -1,19 +1,19 @@
-package org.youthintech.ussd;
+package org.youthintech.resources;
 
 import io.quarkus.logging.Log;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import io.smallrye.mutiny.Uni;
+import org.youthintech.services.UssdService;
 
 @Path("/api/v1/ussd")
 public class UssdResource {
 
-    @Inject
-    UssdSessionHandler sessionHandler;
+     private  final UssdService ussdService;
 
-//    @ConfigProperty(name = "zamhealth.ussd.secret")
-//    String ussdSecret;
+    public UssdResource(UssdService ussdService) {
+        this.ussdService = ussdService;
+    }
 
     /**
      * Africa's Talking posts to this endpoint on every keypress.
@@ -29,14 +29,9 @@ public class UssdResource {
             @FormParam("text")        String text,
             @FormParam("serviceCode") String serviceCode) {
 
-        // Validate shared secret from Africa's Talking
-//        if (!ussdSecret.equals(secret)) {
-//            Log.warnf("Invalid USSD secret from session %s", sessionId);
-//            return Uni.createFrom().item("END Unauthorised request.");
-//        }
 
-        Log.debugf("USSD session=%s phone=%s text='%s'", sessionId, phoneNumber, text);
+        Log.debugf("USSD session=%s phone=%s text='%s' serviceCode=%s", sessionId, phoneNumber, text, serviceCode);
 
-        return sessionHandler.handle(sessionId, phoneNumber, text);
+        return ussdService.handle(sessionId, phoneNumber, text);
     }
 }

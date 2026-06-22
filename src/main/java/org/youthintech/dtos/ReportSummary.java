@@ -1,4 +1,4 @@
-package org.youthintech.report;
+package org.youthintech.dtos;
 
 public class ReportSummary {
     public String ref;
