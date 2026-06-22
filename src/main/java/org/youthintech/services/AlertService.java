@@ -39,7 +39,6 @@ public class AlertService {
                 AND    resolved_at IS NULL
                 LIMIT  1
                 """;
-
         return db.preparedQuery(findSql)
                 .execute(Tuple.of(disease, district))
                 .chain(rows -> {
