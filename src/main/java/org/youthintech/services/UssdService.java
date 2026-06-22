@@ -1,5 +1,6 @@
 package org.youthintech.services;
 
+import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -244,7 +245,7 @@ public class UssdService {
         String classification = classificationService.classify(communityReport.getSymptom(), communityReport.getSeverity(), communityReport.getDuration());
         communityReport.setClassifiedAs(classification);
 
-        return communityReportRepository.persistAndFlush(communityReport)
+        return Panache.withTransaction(() -> communityReportRepository.persistAndFlush(communityReport))
                 .map(savedReport -> {
                     Log.infof("Saved report ref=%s channel=%s district=%s classified_as=%s", savedReport.getId(), communityReport.getChannel(), communityReport.getDistrict(), classification);
 
